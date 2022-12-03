@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Запись</title>
+</head>
+<body>
+    {% include '_menu.html' %}
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}" style="color:#00FF00">{{msg}}</div>
+    {% endfor %}
+    <h2>{{ note.name }}</h2>
+    <form action="{{'/note/' + id}}" method="post" class="form-note">
+        {% if current_user and current_user.is_authenticated %}
+            {% if current_user.user_id == user.user_id %}
+                <p><a href="{{ url_for('edit_note',  id=note.note_id) }}">отредактировать</a>
+                <p><input type="submit" value="Удалить запись" name="delete" />
+                <p><label>Открыто для всех пользователей: {{ note.open }}</label>
+            {% endif %}
+        {% endif %}
+    </form>
+    <p><label>Оценка: {{ note.score }}</label>
+    <p><label>Дата: {{ note.date }}</label>
+    <p><label>Автор: {{ user.nickname }}</label>
+    <p><label>Тип:</label>
+    <ul class="types">
+    {% for type in types %}
+    <li style="display:inline" class="types-li">{{ type.name }}</li>
+    {% endfor %}
+    </ul>
+    <p><label>Жанр:</label>
+    <ul class="genres">
+    {% for genre in genres %}
+    <li style="display:inline" class="genres-li">{{ genre.name }}</li>
+    {% endfor %}
+    </ul>
+    {% if note.text %}
+    <p><label>Текст:</label>
+    <p>{{ note.text }}</p>
+    {% endif %}
+
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

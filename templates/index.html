@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Записи</title>
+</head>
+<body>
+    {% include '_menu.html' %}
+    <h2>Записи</h2>
+    <a href="{{ url_for('note_search', page_num=1) }}">Поиск записей</a>
+    <a href="{{ url_for('user_note_search', page_num=1) }}">Свои записи</a>
+
+</body>
+</html>

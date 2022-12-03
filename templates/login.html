@@ -1,0 +1,24 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+    {% include '_menu.html' %}
+    <h4>Вход в систему</h4>
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}" style="color:#FF0000">{{msg}}</div>
+    {% endfor %}
+    <form action="" method="post" class="form-contact">
+        <p><label>Логин: </label> <input type="text" name="login" value="" required />
+        <p><label>Пароль: </label> <input type="password" name="password" value="" required />
+        <p><input type="submit" name="cmd" value="Войти" />
+        <p><a href="{{url_for('register')}}">Регистрация</a>
+    </form>
+    {% if feedback %}
+    <p>
+        {{ feedback }}
+    </p>
+    {% endif %}
+</body>
+</html>

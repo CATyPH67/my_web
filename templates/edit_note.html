@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Запись</title>
+</head>
+<body>
+    {% include '_menu.html' %}
+    <form action="/edit_note/{{id}}" method="post" class="form-note">
+        <p><label>Название: </label> <input type="text" name="name" value="{{ note.name }}" required />
+        <p><label>Оценка: </label> <input type="text" name="score" value="{{ note.score }}" />
+        <p><label>Удалить тип: </label>
+        <select name="del_types" size="3" multiple>
+            {% for type in del_types %}
+            <option value="{{ type.type_id }}">{{ type.name }}</option>
+            {% endfor %}
+        </select>
+        <p><label>Добавить тип: </label>
+        <select name="add_types" size="3" multiple>
+            {% for type in add_types %}
+            <option value="{{ type.type_id }}">{{ type.name }}</option>
+            {% endfor %}
+        </select>
+        <p><label>Удалить жанр: </label>
+        <select name="del_genres" size="3" multiple>
+            {% for genre in del_genres %}
+            <option value="{{ genre.genre_id }}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
+        <p><label>Добавить жанр: </label>
+        <select name="add_genres" size="3" multiple>
+            {% for genre in add_genres %}
+            <option value="{{ genre.genre_id }}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
+        {% if note.open %}
+        <p><label>Приватная запись: </label> <input type="checkbox" name="private"> да</p>
+        {% else %}
+        <p><label>Приватная запись: </label> <input type="checkbox" name="private" checked> да</p>
+        {% endif %}
+        <p><label>Текст: </label>
+        <textarea name="text">{{ note.text }}</textarea>
+        <p><input type="submit" value="Отредактировать запись" />
+    </form>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

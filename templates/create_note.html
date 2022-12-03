@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Запись</title>
+</head>
+<body>
+    {% include '_menu.html' %}
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}" style="color:#00FF00">{{msg}}</div>
+    {% endfor %}
+    <form action="/create_note" method="post" class="form-note">
+        <p><label>Название: </label> <input type="text" name="name" value="" required />
+        <p><label>Оценка: </label> <input type="text" name="score" value="" />
+        <p><label>Тип: </label>
+        <select name="types" size="3" multiple>
+            {% for type in types %}
+            <option value="{{ type.type_id }}">{{ type.name }}</option>
+            {% endfor %}
+        </select>
+        <p><label>Жанр: </label>
+        <select name="genres" size="3" multiple>
+            {% for genre in genres %}
+            <option value="{{ genre.genre_id }}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
+        <p><label>Приватная запись: </label> <input type="checkbox" name="private"> да</p>
+        <p><label>Текст: </label>
+        <textarea name="text"></textarea>
+        <p><input type="submit" value="Создать запись" />
+    </form>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
