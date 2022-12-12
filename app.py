@@ -204,10 +204,11 @@ def edit_note(id):
 
 
 @app.route('/note_search/<int:page_num>')
-def note_search(page_num):
+@app.route('/note_search/<int:page_num>/<sort_key>')
+def note_search(page_num, sort_key='name'):
     if current_user and current_user.is_authenticated:
         notes_search = db.session.query(Note).filter(Note.open == bool(True), current_user.user_id != Note.user_id).\
-            paginate(per_page=5, page=page_num, error_out=True)
+            order_by().paginate(per_page=5, page=page_num, error_out=True)
     else:
         notes_search = db.session.query(Note).filter(Note.open == bool(True)).paginate(per_page=5, page=page_num, error_out=True)
     return render_template('note_search.html', notes=notes_search)
