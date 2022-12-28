@@ -104,11 +104,21 @@ def note(id):
     )
 
 
-@app.route('/user_note_search/<int:page_num>')
+@app.route('/user_note_search/<int:page_num>', methods=['GET', 'POST'])
 @login_required
 def user_note_search(page_num):
-    user_notes_search = db.session.query(Note).filter(current_user.user_id == Note.user_id).\
+    user_notes_search = db.session.query(Note).filter(current_user.user_id == Note.user_id). \
+    order_by(Note.date).paginate(per_page=5, page=page_num, error_out=True)
+    # if request.method == 'GET':
+    #     return render_template('user_note_search.html', notes=user_notes_search)
+    if request.method == 'POST':
+        name = request.form['name']
+        data = db.session.query(Note).filter(Note.name.like("%" + name + "%")).order_by(Note.date). \
         paginate(per_page=5, page=page_num, error_out=True)
+        if not data:
+            flash("Ничего не найдено")
+        else:
+            user_notes_search = data
     return render_template('user_note_search.html', notes=user_notes_search)
 
 
@@ -203,14 +213,24 @@ def edit_note(id):
     )
 
 
-@app.route('/note_search/<int:page_num>')
-@app.route('/note_search/<int:page_num>/<sort_key>')
-def note_search(page_num, sort_key='name'):
+@app.route('/note_search/<int:page_num>', methods=['GET', 'POST'])
+def note_search(page_num):
     if current_user and current_user.is_authenticated:
         notes_search = db.session.query(Note).filter(Note.open == bool(True), current_user.user_id != Note.user_id).\
-            order_by().paginate(per_page=5, page=page_num, error_out=True)
+            order_by(Note.date).paginate(per_page=5, page=page_num, error_out=True)
     else:
-        notes_search = db.session.query(Note).filter(Note.open == bool(True)).paginate(per_page=5, page=page_num, error_out=True)
+        notes_search = db.session.query(Note).filter(Note.open == bool(True)).\
+            order_by(Note.date).paginate(per_page=5, page=page_num, error_out=True)
+
+    if request.method == 'POST':
+        name = request.form['name']
+        data = db.session.query(Note).filter(Note.name.like("%" + name + "%")).order_by(Note.date). \
+        paginate(per_page=5, page=page_num, error_out=True)
+        if not data:
+            flash("Ничего не найдено")
+        else:
+            notes_search = data
+
     return render_template('note_search.html', notes=notes_search)
 
 

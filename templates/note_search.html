@@ -5,7 +5,15 @@
 </head>
 <body>
 {% include '_menu.html' %}
+{% for cat, msg in get_flashed_messages(True) %}
+<div class="flash {{cat}}" style="color:#FF0000">{{msg}}</div>
+{% endfor %}
 <div class="container">
+<form action="" method = "POST">
+    <label for="name">Название записи</label>
+    <input type="text" name="name" id="name">
+    <button type="btnAdd">ОК</button>
+<a href="/note_search/1">Отмена</a>
  <div class="row">
  <p><h4>Поиск записей</h4>  </p>
  <table id="example" class="table table-striped table-bordered" style="width:100%">
